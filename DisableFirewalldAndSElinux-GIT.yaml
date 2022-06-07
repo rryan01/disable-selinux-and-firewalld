@@ -1,0 +1,16 @@
+---
+- hosts: servers
+  connection: ssh
+  become: True
+  gather_facts: False
+  tasks:
+   - name: Stop and disable firewalld.
+     service:
+       name: firewalld
+       state: stopped
+       enabled: False
+   - name: Disable SELinux
+     selinux: state=disabled
+   - name: reboot machines with timeout
+     reboot:
+       reboot_timeout: 50
